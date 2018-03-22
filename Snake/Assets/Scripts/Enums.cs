@@ -1,0 +1,1 @@
+﻿public enum DIRECTION { North, South, West, East, None}
