@@ -5,7 +5,13 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private SpawnObject food;
     [SerializeField] private Board board;
-    [SerializeField] private RectTransform spawnHolder;
+
+    private RectTransform spawnHolder;
+
+    void Start()
+    {
+        spawnHolder = GameManager.instance.spawnHolder;
+    }
 
     public void SpawnFood()
     {

@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public SpawnManager spawnManager;
     public static GameManager instance;
     public SnakeLabel snakeLabel;
-
+    public RectTransform spawnHolder;
 
     void Awake()
     {

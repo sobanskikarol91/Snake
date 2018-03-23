@@ -37,7 +37,7 @@ public class SnakeTile : MonoBehaviour
     {
         if (collision.tag == "Food")
         {
-            Destroy(collision.gameObject);
+            collision.GetComponent<DestroyEffect>().Effect();
             GetComponentInParent<Snake>().AteFood();
         }
         if (collision.tag == "Player")
