@@ -7,11 +7,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private Board board;
     [SerializeField] private RectTransform spawnHolder;
 
-    public void StartSpawn()
-    {
-        InvokeRepeating("SpawnFood", 1, food.timeToSpawn);
-    }
-
     public void SpawnFood()
     {
         Vector3 pos = board.GetRandomFreeTilePosition();

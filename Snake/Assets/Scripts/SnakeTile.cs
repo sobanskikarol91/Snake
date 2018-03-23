@@ -11,6 +11,7 @@ public class SnakeTile : MonoBehaviour
     }
     public void RemoveTail()
     {
+        boardTile.IsFree = true;
         Destroy(gameObject);
     }
 
@@ -18,11 +19,18 @@ public class SnakeTile : MonoBehaviour
     {
         boardTile = bt;
         rt.position = bt.GetPositionRT();
+        boardTile.IsFree = false;
     }
 
     public Vector2Int GetIndexInBoard()
     {
         return boardTile.IndexOnBoard;
+    }
+
+    public void DisableCollision()
+    {
+        GetComponent<Rigidbody2D>().Sleep();
+        GetComponent<Collider2D>().enabled = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -33,8 +41,6 @@ public class SnakeTile : MonoBehaviour
             GetComponentInParent<Snake>().AteFood();
         }
         if (collision.tag == "Player")
-        {
-            Debug.LogError("GameOver");
-        }
+            GameManager.instance.GameOver();
     }
 }

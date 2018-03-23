@@ -5,7 +5,6 @@ using System.Linq;
 
 public class Snake : MonoBehaviour
 {
-    public Board board;
     public GameObject snakePrefab;
     public SnakeTile head;
     public SnakeTile tail;
@@ -51,12 +50,12 @@ public class Snake : MonoBehaviour
         if (head != null)
         {
             Vector2Int index = GetPositionToCreateTile();
-            BoardTile bt = board.GetBoardTile(index);
+            BoardTile bt = Board.GetBoardTile(index);
             newSnakeTile.SetPositionToBoard(bt);
-
+            head.DisableCollision();
         }
         else
-            newSnakeTile.SetPositionToBoard(board.GetFirstTilePosition());
+            newSnakeTile.SetPositionToBoard(Board.GetFirstTilePosition());
 
         SnakeTile snakeTile = newSnakeTile.GetComponent<SnakeTile>();
         head = snakeTile;
@@ -105,9 +104,7 @@ public class Snake : MonoBehaviour
             case DIRECTION.North:
                 return Vector2Int.left;
             case DIRECTION.South:
-                {
-                    return Vector2Int.right;
-                }
+                return Vector2Int.right;
             case DIRECTION.East:
                 return Vector2Int.up;
             default:
@@ -118,10 +115,10 @@ public class Snake : MonoBehaviour
     Vector2Int GetPositionToCreateTile()
     {
         Vector2Int direction = head.GetIndexInBoard() + GetDirectionToCreateTile();
-        if (direction.x >= board.Rows) direction.x = 0;
-        else if (direction.x < 0) direction.x = board.Rows - 1;
-        else if (direction.y >= board.Columns) direction.y = 0;
-        else if (direction.y < 0) direction.y = board.Columns - 1;
+        if (direction.x >= Board.Rows) direction.x = 0;
+        else if (direction.x < 0) direction.x = Board.Rows - 1;
+        else if (direction.y >= Board.Columns) direction.y = 0;
+        else if (direction.y < 0) direction.y = Board.Columns - 1;
 
         return direction;
     }
@@ -136,6 +133,7 @@ public class Snake : MonoBehaviour
 
     public void AteFood()
     {
+        GameManager.instance.spawnManager.SpawnFood();
         maxSnakeLength++;
         foodAS.Play();
     }
