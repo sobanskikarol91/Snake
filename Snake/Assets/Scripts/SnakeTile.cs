@@ -4,10 +4,12 @@ public class SnakeTile : MonoBehaviour
 {
     private BoardTile boardTile;
     private RectTransform rt;
+    private Animator anim;
 
     void Awake()
     {
         rt = GetComponent<RectTransform>();
+        anim = GetComponent<Animator>();
     }
     public void RemoveTail()
     {
@@ -42,5 +44,10 @@ public class SnakeTile : MonoBehaviour
         }
         if (collision.tag == "Player")
             GameManager.instance.GameOver();
+    }
+
+    public void PlayAnimation()
+    {
+        anim.SetTrigger("eat");
     }
 }

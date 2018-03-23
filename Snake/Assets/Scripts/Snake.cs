@@ -17,7 +17,7 @@ public class Snake : MonoBehaviour
     public float maxSnakeLength = 4;
 
     private DIRECTION direction = DIRECTION.East;
-    private List<SnakeTile> snakeTailsList = new List<SnakeTile>();
+    private List<SnakeTile> tilesList = new List<SnakeTile>();
     private bool isPlayerchoseDirection;
 
     public void CreateSnake()
@@ -59,7 +59,7 @@ public class Snake : MonoBehaviour
 
         SnakeTile snakeTile = newSnakeTile.GetComponent<SnakeTile>();
         head = snakeTile;
-        snakeTailsList.Add(snakeTile);
+        tilesList.Add(snakeTile);
         currentSnakeLength++;
     }
 
@@ -125,16 +125,29 @@ public class Snake : MonoBehaviour
 
     void RemoveTail()
     {
-        SnakeTile st = snakeTailsList.First();
+        SnakeTile st = tilesList.First();
+        tilesList.Remove(st);
         st.RemoveTail();
-        snakeTailsList.Remove(st);
         currentSnakeLength--;
     }
 
     public void AteFood()
     {
         GameManager.instance.spawnManager.SpawnFood();
+        EatingAnimation();
         maxSnakeLength++;
         foodAS.Play();
+    }
+
+
+    void EatingAnimation()
+    {
+        float delay = 0.1f;
+        int nr = 0;
+
+        for (int i = tilesList.Count - 1; i >= 0; i--, nr++)
+        {
+            tilesList[i].Invoke("PlayAnimation", delay * nr);
+        }
     }
 }
