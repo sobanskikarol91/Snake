@@ -7,19 +7,20 @@ public class Snake : MonoBehaviour
 {
     public GameObject snakePrefab;
     public SnakeTile head;
-    public SnakeTile tail;
-    public int currentSnakeLength;
+
 
     public AudioSource moveAS;
     public AudioSource foodAS;
     [Range(0, 2)]
     public float moveTime = 0.5f;
-    public float maxSnakeLength = 4;
+    public float maxSnakeLength = 7;
 
+    private int currentSnakeLength;
     private DIRECTION direction = DIRECTION.East;
     private List<SnakeTile> tilesList = new List<SnakeTile>();
     private bool isPlayerchoseDirection;
     private bool isAlive = true;
+    [SerializeField] private SnakeAnimation animation;
 
     public void CreateSnake()
     {
@@ -38,14 +39,17 @@ public class Snake : MonoBehaviour
                 RemoveTail();
 
             isPlayerchoseDirection = false;
-            yield return  new WaitForSeconds(moveTime);
+            yield return new WaitForSeconds(moveTime);
         }
     }
 
+    private int nr = 0;
     public void CreateNextTile()
     {
+        nr++;
         // Create new snake Tile
         SnakeTile newSnakeTile = Instantiate(snakePrefab).GetComponent<SnakeTile>();
+        newSnakeTile.name = nr.ToString();
         // Set parent to Snake holder
         newSnakeTile.transform.SetParent(transform);
         // Change scale to 1
@@ -143,21 +147,15 @@ public class Snake : MonoBehaviour
     public void AteFood()
     {
         GameManager.instance.spawnManager.SpawnFood();
-        EatingAnimation();
+        animation.PlayEating(tilesList);
         maxSnakeLength++;
         foodAS.Play();
         IncreaseSpeed();
     }
 
-
-    void EatingAnimation()
+    public void Death()
     {
-        float delay = 0.1f;
-        int nr = 0;
-
-        for (int i = tilesList.Count - 1; i >= 0; i--, nr++)
-        {
-            tilesList[i].Invoke("PlayAnimation", delay * nr);
-        }
+        animation.PlayDeath(tilesList);
+        isAlive = false;
     }
 }

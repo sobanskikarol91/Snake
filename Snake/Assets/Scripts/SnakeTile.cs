@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+
+
 public class SnakeTile : MonoBehaviour
 {
+
+    private DestroyEffect destroyEffect;
     private BoardTile boardTile;
     private RectTransform rt;
     private Animator anim;
 
     void Awake()
     {
+        destroyEffect = GetComponent<DestroyEffect>();
         rt = GetComponent<RectTransform>();
         anim = GetComponent<Animator>();
     }
@@ -33,7 +38,6 @@ public class SnakeTile : MonoBehaviour
     public void DisableCollision()
     {
         GetComponent<Rigidbody2D>().Sleep();
-        GetComponent<Collider2D>().enabled = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -43,17 +47,20 @@ public class SnakeTile : MonoBehaviour
             collision.GetComponent<DestroyEffect>().Effect();
             GetComponentInParent<Snake>().AteFood();
         }
-        if (collision.tag == "Player")
+        else if (collision.tag == "Player")
+        {
             GameManager.instance.GameOver();
+        }
     }
 
-    public void PlayAnimation()
+    public void PlayEating()
     {
         anim.SetTrigger("eat");
     }
 
-    public void DestroyTile()
+    public void PlayDeath()
     {
-
+        anim.SetTrigger("death");
+        destroyEffect.Effect();
     }
 }

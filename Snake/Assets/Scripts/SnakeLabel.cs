@@ -17,8 +17,7 @@ public class SnakeLabel : MonoBehaviour
     {
         GetIndexes();
         CreateLetters();
-        Invoke("DestroyIt",3.5f);
-     
+        Invoke("DestroyIt",3.1f);
     }
 
     Vector2Int CenterLabel()

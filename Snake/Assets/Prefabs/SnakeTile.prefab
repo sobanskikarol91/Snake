@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 61854783324294092}
   - component: {fileID: 50168950751597576}
   - component: {fileID: 95754515438675838}
+  - component: {fileID: 114715441356207698}
   m_Layer: 5
   m_Name: SnakeTile
   m_TagString: Player
@@ -75,7 +76,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 90, y: 90}
+  m_Size: {x: 50, y: 50}
   m_EdgeRadius: 0
 --- !u!95 &95754515438675838
 Animator:
@@ -132,6 +133,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1fbf5137ca8d0446aec61cdae65536c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyEffect: {fileID: 0}
+--- !u!114 &114715441356207698
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1319259162747406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 686051b956fb16e44a1adcd135870c77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectPrefab: {fileID: 1564344291530040, guid: 2728d41351d64e34697ac8b24b7d3a05,
+    type: 2}
 --- !u!222 &222741627212507760
 CanvasRenderer:
   m_ObjectHideFlags: 1
