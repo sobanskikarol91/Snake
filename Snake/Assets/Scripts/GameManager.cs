@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     {
         yield return StartCoroutine(board.CreateBoard());
         snakeLabel.CreateLabel();
+        yield return new WaitForSeconds(3.5f);
         if (spawnPlayer)
         {
             snake.CreateSnake();

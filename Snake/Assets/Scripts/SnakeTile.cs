@@ -11,6 +11,7 @@ public class SnakeTile : MonoBehaviour
         rt = GetComponent<RectTransform>();
         anim = GetComponent<Animator>();
     }
+
     public void RemoveTail()
     {
         boardTile.IsFree = true;
@@ -49,5 +50,10 @@ public class SnakeTile : MonoBehaviour
     public void PlayAnimation()
     {
         anim.SetTrigger("eat");
+    }
+
+    public void DestroyTile()
+    {
+
     }
 }

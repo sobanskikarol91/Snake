@@ -7,30 +7,38 @@ using UnityEngine.UI;
 public class Board : MonoBehaviour
 {
     public GameObject tilePrefab;
-    public static int Columns { get; private set; }
+    [SerializeField] const int columns = 21;
+    public static int Columns { get { return columns; } }
     public static int Rows { get; private set; }
 
     private GridLayoutGroup gridLayout;
     public static List<BoardTile[]> BoardTiles { get; private set; }
     private BoardTileAnimator[] tilesAnimators;
 
-    void Start()
+    void Awake()
     {
         gridLayout = GetComponent<GridLayoutGroup>();
-        CountColumnsAndRows();
-
-        tilesAnimators = new BoardTileAnimator[Rows * Columns];
-        BoardTiles = new List<BoardTile[]>();
-
+        SetRowsAndScaleFactorDependsToColumns();
     }
 
-    void CountColumnsAndRows()
+    void Start()
     {
-        float spacing = gridLayout.spacing.x;
-        Vector2 sizePrefab = tilePrefab.GetComponent<RectTransform>().rect.size;
+        tilesAnimators = new BoardTileAnimator[Rows * Columns];
+        BoardTiles = new List<BoardTile[]>();
+    }
 
-        Columns = (int)(Screen.width / (sizePrefab.x + spacing));
-        Rows = (int)(Screen.height / (sizePrefab.x + spacing));
+    void SetRowsAndScaleFactorDependsToColumns()
+    {
+        Vector2 spacing = gridLayout.spacing;
+        Vector2 sizePrefab = tilePrefab.GetComponent<RectTransform>().rect.size;
+        CanvasScaler canvasScaler = GameObject.FindGameObjectWithTag("Canvas").GetComponent<CanvasScaler>();
+
+        float desireWidth = (sizePrefab.x + spacing.x) * Columns;
+        canvasScaler.scaleFactor = Screen.width / desireWidth;
+
+        float tileHeight = sizePrefab.y + spacing.y;
+        float rowHeight = Screen.height * 1 / canvasScaler.scaleFactor;
+        Rows = (int)(rowHeight / tileHeight);
     }
 
     public IEnumerator CreateBoard()
@@ -43,6 +51,7 @@ public class Board : MonoBehaviour
                 break;
             yield return null;
         }
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
 
     public void CreateTiles()

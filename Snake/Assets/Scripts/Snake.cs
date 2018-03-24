@@ -19,22 +19,27 @@ public class Snake : MonoBehaviour
     private DIRECTION direction = DIRECTION.East;
     private List<SnakeTile> tilesList = new List<SnakeTile>();
     private bool isPlayerchoseDirection;
+    private bool isAlive = true;
 
     public void CreateSnake()
     {
-        InvokeRepeating("Move", 0, moveTime);
+        StartCoroutine(Move());
     }
 
-    void Move()
+    IEnumerator Move()
     {
-        moveAS.Play();
+        while (isAlive)
+        {
+            moveAS.Play();
 
-        CreateNextTile();
+            CreateNextTile();
 
-        if (currentSnakeLength >= maxSnakeLength)
-            RemoveTail();
+            if (currentSnakeLength >= maxSnakeLength)
+                RemoveTail();
 
-        isPlayerchoseDirection = false;
+            isPlayerchoseDirection = false;
+            yield return  new WaitForSeconds(moveTime);
+        }
     }
 
     public void CreateNextTile()
@@ -63,6 +68,10 @@ public class Snake : MonoBehaviour
         currentSnakeLength++;
     }
 
+    void IncreaseSpeed()
+    {
+        moveTime *= 0.98f;
+    }
 
     void Update()
     {
@@ -137,6 +146,7 @@ public class Snake : MonoBehaviour
         EatingAnimation();
         maxSnakeLength++;
         foodAS.Play();
+        IncreaseSpeed();
     }
 
 

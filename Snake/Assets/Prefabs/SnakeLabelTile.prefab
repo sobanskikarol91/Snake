@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114645059698934548}
   - component: {fileID: 114746582676859398}
   - component: {fileID: 95947941113975516}
+  - component: {fileID: 114912766519246494}
   m_Layer: 5
   m_Name: SnakeLabelTile
   m_TagString: Untagged
@@ -59,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.986207, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -94,6 +95,19 @@ MonoBehaviour:
   speed:
     min: 5.5
     max: 6
+--- !u!114 &114912766519246494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1324282272568756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 686051b956fb16e44a1adcd135870c77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectPrefab: {fileID: 1564344291530040, guid: 649eadb33feebc94798a9fdc4810e85d,
+    type: 2}
 --- !u!222 &222240532474627908
 CanvasRenderer:
   m_ObjectHideFlags: 1
