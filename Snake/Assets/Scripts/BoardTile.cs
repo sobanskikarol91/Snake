@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BoardTile : MonoBehaviour
+public class BoardTile : Tile
 {
     public bool IsFree { get; set; }
-    public Vector2Int IndexOnBoard { get; set; }
 
     private RectTransform rt;
     

@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public bool startGame = true;
     public bool spawnPlayer = true;
+    public bool showLabel = true;
     public Board board;
     public Snake snake;
     public SpawnManager spawnManager;
@@ -27,12 +28,17 @@ public class GameManager : MonoBehaviour
     IEnumerator StartGame()
     {
         yield return StartCoroutine(board.CreateBoard());
-        snakeLabel.CreateLabel();
-        yield return new WaitForSeconds(3.5f);
+        if (showLabel)
+        {
+            snakeLabel.CreateLabel();
+            yield return new WaitForSeconds(3.5f);
+        }
+ 
+
         if (spawnPlayer)
         {
             snake.CreateSnake();
-            spawnManager.SpawnFood();
+            spawnManager.Spawn();
         }
     }
 

@@ -3,23 +3,35 @@ using System.Collections;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private SpawnObject food;
-    [SerializeField] private Board board;
+    public bool spawnObstacles = true;
+    [SerializeField] private GameObject foodPrefab;
+    public static RectTransform spawnHolder;
 
-    private RectTransform spawnHolder;
-
+    private ObstacleSpawner obstacleSpawner;
     void Start()
     {
+        obstacleSpawner = GetComponent<ObstacleSpawner>();
         spawnHolder = GameManager.instance.spawnHolder;
+    }
+
+    public void Spawn()
+    {
+        if (spawnObstacles) SpawnObstacle();
+        SpawnFood();
     }
 
     public void SpawnFood()
     {
-        Vector3 pos = board.GetRandomFreeTilePosition();
-        CreateObject(food.toSpawn, pos);
+        Vector3 pos = Board.GetRandomFreeTilePosition();
+        CreateObject(foodPrefab, pos);
     }
 
-    void CreateObject(GameObject prefab, Vector3 pos)
+    void SpawnObstacle()
+    {
+        obstacleSpawner.SpawnRandom();
+    }
+
+    public static void CreateObject(GameObject prefab, Vector3 pos)
     {
         // Create new snake Tile
         RectTransform newTileRT = Instantiate(prefab).GetComponent<RectTransform>();
@@ -29,12 +41,5 @@ public class SpawnManager : MonoBehaviour
         newTileRT.transform.localScale = new Vector3(1, 1, 1);
         // Set RT world position relative to last snake tile - head
         newTileRT.position = pos;
-    }
-
-    [System.Serializable]
-    class SpawnObject
-    {
-        public GameObject toSpawn;
-        public int timeToSpawn;
     }
 }

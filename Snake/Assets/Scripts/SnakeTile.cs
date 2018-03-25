@@ -47,10 +47,8 @@ public class SnakeTile : MonoBehaviour
             collision.GetComponent<DestroyEffect>().Effect();
             GetComponentInParent<Snake>().AteFood();
         }
-        else if (collision.tag == "Player")
-        {
+        else if (collision.tag == "Player" || collision.tag == "Obstacle")
             GameManager.instance.GameOver();
-        }
     }
 
     public void PlayEating()

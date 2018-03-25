@@ -13,7 +13,9 @@ public class Board : MonoBehaviour
 
     private GridLayoutGroup gridLayout;
     public static List<BoardTile[]> BoardTiles { get; private set; }
+    public static List<BoardTile[]> unusedTiles { get; private set; }
     private BoardTileAnimator[] tilesAnimators;
+
 
     void Awake()
     {
@@ -75,6 +77,8 @@ public class Board : MonoBehaviour
                 tilesAnimators[r * Columns + c] = bt.GetComponent<BoardTileAnimator>();
             }
         }
+
+        unusedTiles = BoardTiles;
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
         gridLayout.enabled = false;
     }
@@ -89,7 +93,12 @@ public class Board : MonoBehaviour
         return BoardTiles[index.x][index.y];
     }
 
-    public Vector3 GetRandomFreeTilePosition()
+    public static Vector3 GetBoardTilePosition(Vector2Int index)
+    {
+        return BoardTiles[index.x][index.y].GetPositionRT();
+    }
+
+    public static Vector3 GetRandomFreeTilePosition()
     {
         List<BoardTile> freeTiles = new List<BoardTile>();
 
@@ -100,5 +109,13 @@ public class Board : MonoBehaviour
 
         // TODO: if there is one left square win
         return freeTiles.Random().GetPositionRT();
+    }
+
+    public static void ChooseTileToUse(Vector2Int index)
+    {
+        if (!unusedTiles[index.x][index.y].IsFree)
+            Debug.LogError("Tile is already used: " + index.y + " " + index.x + " " + unusedTiles[index.y][index.x].IsFree);
+
+        unusedTiles[index.x][index.y].IsFree = false;
     }
 }

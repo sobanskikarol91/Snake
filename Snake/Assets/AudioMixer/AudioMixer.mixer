@@ -66,8 +66,9 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: e5210a8cd5964fb46bd1403e52e2766b
   m_FloatValues:
-    08b62915e9cfdc644bb235ed20bb85dc: 18.449533
-    214e5879c31e430468fe4e14cc651849: 3.704152
+    08b62915e9cfdc644bb235ed20bb85dc: 4.6480947
+    214e5879c31e430468fe4e14cc651849: 0
+    a3ee8e7955976af458b23c788236c57f: -4.1973577
   m_TransitionOverrides: {}
 --- !u!243 &243157051919653658
 AudioMixerGroupController:
@@ -91,7 +92,7 @@ AudioMixerGroupController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: New Group
+  m_Name: Walk
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 67ffb35199cacf94ba56e05b599b346a
   m_Children: []
@@ -108,7 +109,7 @@ AudioMixerGroupController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Eat
+  m_Name: Food
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 27cd7e8a108e7924284580fefd88c53c
   m_Children: []
