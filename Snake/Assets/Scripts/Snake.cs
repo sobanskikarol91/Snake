@@ -7,23 +7,31 @@ public class Snake : MonoBehaviour
 {
     public GameObject snakePrefab;
     public SnakeTile head;
-
-
     public AudioSource moveAS;
     public AudioSource foodAS;
-    [Range(0, 2)]
-    public float moveTime = 0.5f;
-    public float maxSnakeLength = 7;
+    [Range(0, 2)] public float startMoveTime = 0.2f;
+    public float currentMoveTime;
+    public float increaseSpeedFactor = 0.98f;
+    public int startSnakeLength = 7;
 
     private int currentSnakeLength;
-    private DIRECTION direction = DIRECTION.East;
+    private int maxSnakeLength;
+    private DIRECTION direction;
     private List<SnakeTile> tilesList = new List<SnakeTile>();
     private bool isPlayerchoseDirection;
     private bool isAlive = true;
-    [SerializeField] private SnakeAnimation animation;
+    
+    [SerializeField] private SnakeAnimation anim;
+
 
     public void CreateSnake()
     {
+        if (!isAlive) Restart();
+        direction = DIRECTION.East;
+        isAlive = true;
+        currentSnakeLength = 0;
+        maxSnakeLength = startSnakeLength;
+        currentMoveTime = startMoveTime;
         StartCoroutine(Move());
     }
 
@@ -39,29 +47,26 @@ public class Snake : MonoBehaviour
                 RemoveTail();
 
             isPlayerchoseDirection = false;
-            yield return new WaitForSeconds(moveTime);
+            yield return new WaitForSeconds(currentMoveTime);
         }
     }
 
-    private int nr = 0;
+
     public void CreateNextTile()
     {
-        nr++;
         // Create new snake Tile
         SnakeTile newSnakeTile = Instantiate(snakePrefab).GetComponent<SnakeTile>();
-        newSnakeTile.name = nr.ToString();
         // Set parent to Snake holder
         newSnakeTile.transform.SetParent(transform);
         // Change scale to 1
         newSnakeTile.transform.localScale = new Vector3(1, 1, 1);
-
         // Set RT world position relative to last snake tile - head
         if (head != null)
         {
             Vector2Int index = GetPositionToCreateTile();
             BoardTile bt = Board.GetBoardTile(index);
             newSnakeTile.SetPositionToBoard(bt);
-            head.DisableCollision();
+            head.DisableRigidbody();
         }
         else
             newSnakeTile.SetPositionToBoard(Board.GetFirstTilePosition());
@@ -74,7 +79,7 @@ public class Snake : MonoBehaviour
 
     void IncreaseSpeed()
     {
-        moveTime *= 0.98f;
+        currentMoveTime *= increaseSpeedFactor;
     }
 
     void Update()
@@ -118,10 +123,10 @@ public class Snake : MonoBehaviour
                 return Vector2Int.left;
             case DIRECTION.South:
                 return Vector2Int.right;
-            case DIRECTION.East:
-                return Vector2Int.up;
-            default:
+            case DIRECTION.West:
                 return Vector2Int.down;
+            default:
+                return Vector2Int.up;
         }
     }
 
@@ -146,8 +151,7 @@ public class Snake : MonoBehaviour
 
     public void AteFood()
     {
-        GameManager.instance.spawnManager.SpawnFood();
-        animation.PlayEating(tilesList);
+        anim.PlayEating(tilesList);
         maxSnakeLength++;
         foodAS.Play();
         IncreaseSpeed();
@@ -155,7 +159,14 @@ public class Snake : MonoBehaviour
 
     public void Death()
     {
-        animation.PlayDeath(tilesList);
+        anim.PlayDeath(tilesList);
+        StopAllCoroutines();
         isAlive = false;
+    }
+
+    public void Restart()
+    {
+        head = null;
+        tilesList.Clear();
     }
 }

@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686051b956fb16e44a1adcd135870c77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectPrefab: {fileID: 1564344291530040, guid: 649eadb33feebc94798a9fdc4810e85d,
+  effectPrefab: {fileID: 1564344291530040, guid: e2fe0053ee691f04b9b8b4ad721a396b,
     type: 2}
 --- !u!222 &222616139307627444
 CanvasRenderer:

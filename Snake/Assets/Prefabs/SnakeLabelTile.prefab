@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686051b956fb16e44a1adcd135870c77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectPrefab: {fileID: 1564344291530040, guid: 649eadb33feebc94798a9fdc4810e85d,
+  effectPrefab: {fileID: 1564344291530040, guid: 536d1b2f25af5234cb4059a265c305fa,
     type: 2}
 --- !u!222 &222240532474627908
 CanvasRenderer:

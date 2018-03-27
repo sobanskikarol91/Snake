@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.XR.WSA.Input;
 
 public class Board : MonoBehaviour
 {
     public GameObject tilePrefab;
-    [SerializeField] const int columns = 21;
+    public static int columns = 21;
     public static int Columns { get { return columns; } }
     public static int Rows { get; private set; }
 
@@ -15,10 +16,11 @@ public class Board : MonoBehaviour
     public static List<BoardTile[]> BoardTiles { get; private set; }
     public static List<BoardTile[]> unusedTiles { get; private set; }
     private BoardTileAnimator[] tilesAnimators;
-
+    private Animator anim;
 
     void Awake()
     {
+        anim = GetComponent<Animator>();
         gridLayout = GetComponent<GridLayoutGroup>();
         SetRowsAndScaleFactorDependsToColumns();
     }
@@ -27,6 +29,9 @@ public class Board : MonoBehaviour
     {
         tilesAnimators = new BoardTileAnimator[Rows * Columns];
         BoardTiles = new List<BoardTile[]>();
+
+        if (!GameManager.instance.instantStart)
+            anim.SetTrigger("showBoard");
     }
 
     void SetRowsAndScaleFactorDependsToColumns()
@@ -47,12 +52,14 @@ public class Board : MonoBehaviour
     {
         CreateTiles();
 
-        while (true)
-        {
-            if (tilesAnimators.All(t => t.PlayingAnimationIsDone))
-                break;
-            yield return null;
-        }
+        if (!GameManager.instance.instantStart)
+            while (true)
+            {
+                if (tilesAnimators.All(t => t.PlayingAnimationIsDone))
+                    break;
+                yield return null;
+            }
+
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
 
@@ -117,5 +124,12 @@ public class Board : MonoBehaviour
             Debug.LogError("Tile is already used: " + index.y + " " + index.x + " " + unusedTiles[index.y][index.x].IsFree);
 
         unusedTiles[index.x][index.y].IsFree = false;
+    }
+
+    public void Restart()
+    {
+        for (int r = 0; r < Rows; r++)
+            for (int c = 0; c < Columns; c++)
+                BoardTiles[r][c].IsFree = true;
     }
 }

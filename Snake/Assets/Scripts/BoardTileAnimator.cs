@@ -13,7 +13,9 @@ public class BoardTileAnimator : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        StartCoroutine("IEDelayShow");
+
+        if (!GameManager.instance.instantStart)
+            StartCoroutine("IEDelayShow");
     }
 
     IEnumerator IEDelayShow()

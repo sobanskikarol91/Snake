@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class SpawnManager : MonoBehaviour
     public static RectTransform spawnHolder;
 
     private ObstacleSpawner obstacleSpawner;
+
+
     void Start()
     {
         obstacleSpawner = GetComponent<ObstacleSpawner>();
@@ -41,5 +44,11 @@ public class SpawnManager : MonoBehaviour
         newTileRT.transform.localScale = new Vector3(1, 1, 1);
         // Set RT world position relative to last snake tile - head
         newTileRT.position = pos;
+    }
+
+    public void Restart()
+    {
+        obstacleSpawner.Restart();
+        Spawn();
     }
 }

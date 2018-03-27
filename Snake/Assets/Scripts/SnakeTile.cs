@@ -4,7 +4,6 @@ using System.Collections;
 
 public class SnakeTile : MonoBehaviour
 {
-
     private DestroyEffect destroyEffect;
     private BoardTile boardTile;
     private RectTransform rt;
@@ -35,7 +34,7 @@ public class SnakeTile : MonoBehaviour
         return boardTile.IndexOnBoard;
     }
 
-    public void DisableCollision()
+    public void DisableRigidbody()
     {
         GetComponent<Rigidbody2D>().Sleep();
     }
@@ -45,7 +44,7 @@ public class SnakeTile : MonoBehaviour
         if (collision.tag == "Food")
         {
             collision.GetComponent<DestroyEffect>().Effect();
-            GetComponentInParent<Snake>().AteFood();
+            GameManager.instance.PlayerAteFood();
         }
         else if (collision.tag == "Player" || collision.tag == "Obstacle")
             GameManager.instance.GameOver();
