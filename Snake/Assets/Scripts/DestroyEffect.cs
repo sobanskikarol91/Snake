@@ -3,13 +3,7 @@ using System.Collections;
 
 public class DestroyEffect : MonoBehaviour
 {
-    Animator anim;
     public GameObject effectPrefab;
-
-    public void Start()
-    {
-        anim = GetComponent<Animator>();     
-    }
 
     public void Effect()
     {

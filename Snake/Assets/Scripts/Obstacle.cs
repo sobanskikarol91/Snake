@@ -8,10 +8,10 @@ public class Obstacle : MonoBehaviour
     private List<Vector2Int> tilesPositions = new List<Vector2Int>();
 
 
-    public void Create(int spawnBoundry, List<Vector2Int> tilesPosition)
+    public void Create(int spawnBoundry, List<Vector2Int> tilesPosition, int nr, int max)
     {
         this.tilesPositions = tilesPosition;
-        Vector2Int offset = ChooseSpawnPosition(spawnBoundry);
+        Vector2Int offset = ChooseMultiSpawnPosition(spawnBoundry, nr, max);
 
         for (int i = 0; i < tilesPositions.Count; i++)
         {
@@ -34,6 +34,19 @@ public class Obstacle : MonoBehaviour
         return new Vector2Int(rowNr, columnNr);
     }
 
+    Vector2Int ChooseMultiSpawnPosition(int spawnBoundry, int obstacleNr, int obstacleAmount)
+    {
+        Vector2Int size = GetSize();
+        int widthMin = obstacleNr * Board.Columns / obstacleAmount + spawnBoundry;
+        int widthMax = (obstacleNr + 1) * (Board.Columns / obstacleAmount) - (spawnBoundry + size.x);
+        int heightMax = Board.Rows - 1 - (size.y + spawnBoundry);
+
+        int columnNr = Random.Range(widthMin, widthMax);
+        int rowNr = Random.Range(spawnBoundry, heightMax);
+
+        return new Vector2Int(rowNr, columnNr);
+    }
+
     Vector2Int GetIndex(int nr)
     {
         return tilesPositions[nr];
@@ -41,8 +54,8 @@ public class Obstacle : MonoBehaviour
 
     public Vector2Int GetSize()
     {
-        int width = tilesPositions.Max(t => t.x) + 1;
-        int height = tilesPositions.Max(t => t.y) + 1;
+        int height = tilesPositions.Max(t => t.x) + 1;
+        int width = tilesPositions.Max(t => t.y) + 1;
         return new Vector2Int(width, height);
     }
 }

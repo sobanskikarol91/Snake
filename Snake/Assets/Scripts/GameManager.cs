@@ -61,15 +61,6 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(0);
     }
 
-    void AndroidInput()
-    {
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            Vector2 screenTouchPos = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
-            Vector2 wolrdTouchPos = Camera.main.ScreenToWorldPoint(screenTouchPos);
-        }
-    }
-
     public void GameOver()
     {
         snake.Death();

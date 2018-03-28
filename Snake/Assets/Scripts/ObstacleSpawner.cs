@@ -7,6 +7,7 @@ public class ObstacleSpawner : MonoBehaviour
     public int spawnBoundry = 1;
     public ObstaclePositions obstaclePosition = new ObstaclePositions();
 
+    [Range(0,2)]
     [SerializeField] private int amountToSpawn = 2;
     public GameObject[] obstaclePrefab;
 
@@ -20,7 +21,7 @@ public class ObstacleSpawner : MonoBehaviour
             newObstacle.transform.SetParent(SpawnManager.spawnHolder);
             newObstacle.transform.localScale = new Vector3(1, 1, 1);
             List<Vector2Int> tilesPositions = obstaclePosition.GetPositionsList();
-            newObstacle.GetComponent<Obstacle>().Create(spawnBoundry, tilesPositions);
+            newObstacle.GetComponent<Obstacle>().Create(spawnBoundry, tilesPositions, i, amountToSpawn);
         }
     }
 

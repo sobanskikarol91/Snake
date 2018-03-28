@@ -16,6 +16,7 @@ public class ObstaclePositions
         Bow();
         Square();
         Cross();
+        Strange();
     }
 
     public List<Vector2Int> GetPositionsList()
@@ -27,6 +28,30 @@ public class ObstaclePositions
     {
         tilesPositions = new List<List<Vector2Int>>();
         CreatePosistionList();
+    }
+
+    void Strange()
+    {
+        List<Vector2Int> list = new List<Vector2Int>();
+
+        AddPositionToList(0, 0, list);
+        AddPositionToList(0, 1, list);
+        AddPositionToList(0, 2, list);
+        AddPositionToList(0, 3, list);
+        AddPositionToList(0, 4, list);
+        AddPositionToList(0, 5, list);
+        AddPositionToList(1, 0, list);
+        AddPositionToList(1, 5, list);
+        AddPositionToList(2, 0, list);
+        AddPositionToList(2, 5, list);
+        AddPositionToList(3, 0, list);
+        AddPositionToList(3, 5, list);
+        AddPositionToList(4, 0, list);
+        AddPositionToList(4, 1, list);
+        AddPositionToList(4, 4, list);
+        AddPositionToList(4, 5, list);
+
+        tilesPositions.Add(list);
     }
 
     void Bow()

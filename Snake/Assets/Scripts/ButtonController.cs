@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
+
 
 [RequireComponent(typeof(AudioSource))]
 public class ButtonController : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
@@ -11,13 +8,11 @@ public class ButtonController : MonoBehaviour, IPointerEnterHandler, IPointerCli
     public Clip highlighted;
     public Clip clicked;
     AudioSource _audioSource;
-    Button _button;
 
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
         _audioSource.playOnAwake = false;
-         _button = GetComponent<Button>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
