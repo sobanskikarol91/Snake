@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
     public Menu gameOver;
+    public float delayGameOver = 0.5f;
 
     void Start()
     {
         gameOver.gameObject.SetActive(false);
     }
+
     public void ShowGameOver()
+    {
+        Invoke("DelayedShow", delayGameOver);
+    }
+
+    void DelayedShow()
     {
         gameOver.gameObject.SetActive(true);
     }
@@ -18,6 +23,7 @@ public class MenuManager : MonoBehaviour
     void HideGameOver()
     {
         gameOver.gameObject.SetActive(false);
+        GameManager.instance.RestartGame();
     }
 
     public void Exit()
@@ -27,7 +33,6 @@ public class MenuManager : MonoBehaviour
 
     public void NewGame()
     {
-        HideGameOver();
-        GameManager.instance.RestartGame();
+        Invoke("HideGameOver", 0.4f);
     }
 }

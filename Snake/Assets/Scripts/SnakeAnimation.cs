@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class SnakeAnimation : MonoBehaviour
@@ -8,7 +7,7 @@ public class SnakeAnimation : MonoBehaviour
     private const string destroyAnim = "PlayDeath";
     private float eatingAnimationDelay = 0.1f;
     private float destroyAnimationDelay = 0.15f;
-
+    private float sumDestroyAnimationDelay = 2f;
 
 
     public void PlayEating(List<SnakeTile> tilesList)
@@ -16,9 +15,10 @@ public class SnakeAnimation : MonoBehaviour
         PlayDelayedAnimation(tilesList, eatingAnim, eatingAnimationDelay);
     }
 
-    public void PlayDeath(List<SnakeTile> tilesList)
+    public void PlayDeath(List<SnakeTile> tilesList, int snakeSize)
     {
-        PlayDelayedAnimation(tilesList, destroyAnim, destroyAnimationDelay);
+      float time =  Mathf.Min(destroyAnimationDelay, sumDestroyAnimationDelay/snakeSize);
+        PlayDelayedAnimation(tilesList, destroyAnim, time);
     }
 
     void PlayDelayedAnimation(List<SnakeTile> tilesList, string name, float delay)

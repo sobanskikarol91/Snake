@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 198081175166451854}
   - component: {fileID: 114503353049370842}
   - component: {fileID: 82273791413664248}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: DestroyEffectFood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3562,9 +3562,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: 2052455445
+  m_SortingLayer: 1
+  m_SortingOrder: 2
   m_RenderMode: 1
   m_SortMode: 0
   m_MinParticleSize: 0

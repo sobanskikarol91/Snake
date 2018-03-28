@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
-using UnityEngine.XR.WSA.Input;
 
 public class Board : MonoBehaviour
 {
@@ -23,13 +22,15 @@ public class Board : MonoBehaviour
         anim = GetComponent<Animator>();
         gridLayout = GetComponent<GridLayoutGroup>();
         SetRowsAndScaleFactorDependsToColumns();
-    }
 
-    void Start()
-    {
         tilesAnimators = new BoardTileAnimator[Rows * Columns];
         BoardTiles = new List<BoardTile[]>();
 
+
+    }
+
+    private void Start()
+    {
         if (!GameManager.instance.instantStart)
             anim.SetTrigger("showBoard");
     }
@@ -57,6 +58,7 @@ public class Board : MonoBehaviour
             {
                 if (tilesAnimators.All(t => t.PlayingAnimationIsDone))
                     break;
+
                 yield return null;
             }
 

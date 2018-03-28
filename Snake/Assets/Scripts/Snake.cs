@@ -20,7 +20,7 @@ public class Snake : MonoBehaviour
     private List<SnakeTile> tilesList = new List<SnakeTile>();
     private bool isPlayerchoseDirection;
     private bool isAlive = true;
-    
+
     [SerializeField] private SnakeAnimation anim;
 
 
@@ -84,10 +84,18 @@ public class Snake : MonoBehaviour
 
     void Update()
     {
+        if (isPlayerchoseDirection) return;
+
+        if (Application.platform == RuntimePlatform.Android)
+            AndroidMove();
+        else
+            PCMove();
+    }
+
+    void PCMove()
+    {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-
-        if (isPlayerchoseDirection) return;
 
         if (horizontal != 0)
         {
@@ -102,6 +110,20 @@ public class Snake : MonoBehaviour
             if (IsMovingVertical()) return;
             direction = vertical > 0 ? DIRECTION.North : DIRECTION.South;
             isPlayerchoseDirection = true;
+        }
+    }
+
+    void AndroidMove()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            isPlayerchoseDirection = true;
+            Vector2 headPos = head.GetPositionOnScreen();
+
+            if (IsMovingHorizontal())
+                direction = Input.mousePosition.y > headPos.y ? DIRECTION.North : DIRECTION.South;
+            else
+                direction = Input.mousePosition.x > headPos.x ? DIRECTION.East : DIRECTION.West;
         }
     }
 
@@ -159,7 +181,7 @@ public class Snake : MonoBehaviour
 
     public void Death()
     {
-        anim.PlayDeath(tilesList);
+        anim.PlayDeath(tilesList, currentSnakeLength);
         StopAllCoroutines();
         isAlive = false;
     }

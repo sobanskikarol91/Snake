@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.XR.WSA.Input;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -16,13 +15,18 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public SnakeLabel snakeLabel;
     public RectTransform spawnHolder;
+    public float delayAfterRestart = 1f;
+    
+    private ColorManager colorManager;
     private MenuManager menu;
 
     public int Score { get; set; }
     public int scoreFactor = 100;
+
     void Awake()
     {
         instance = this;
+        colorManager = GetComponent<ColorManager>();
         menu = GetComponent<MenuManager>();
     }
 
@@ -46,6 +50,7 @@ public class GameManager : MonoBehaviour
         {
             snake.CreateSnake();
             spawnManager.Spawn();
+            colorManager.StartChangingColor();
         }
     }
 
@@ -69,11 +74,19 @@ public class GameManager : MonoBehaviour
     {
         snake.Death();
         menu.ShowGameOver();
-        spawnHolder.GetComponent<SpawnHolder>().RemoveSpawnedObjects();
     }
 
     public void RestartGame()
     {
+        StartCoroutine(IERestart());    
+    }
+
+
+    IEnumerator IERestart()
+    {
+        spawnHolder.GetComponent<SpawnHolder>().RemoveSpawnedObjects();
+        yield return new WaitForSeconds(delayAfterRestart);
+        Score = 0;
         board.Restart();
         snake.CreateSnake();
         spawnManager.Restart();
@@ -81,6 +94,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayerAteFood()
     {
+        snake.AteFood();
         spawnManager.SpawnFood();
         Score += scoreFactor;
     }

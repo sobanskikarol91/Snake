@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 
 public class SnakeTile : MonoBehaviour
@@ -59,5 +58,10 @@ public class SnakeTile : MonoBehaviour
     {
         anim.SetTrigger("death");
         destroyEffect.Effect();
+    }
+
+    public Vector2 GetPositionOnScreen()
+    {
+       return Camera.main.WorldToScreenPoint(transform.position);
     }
 }
