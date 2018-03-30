@@ -3,11 +3,11 @@
 
 public class SpawnHolder : MonoBehaviour
 {
-   public void RemoveSpawnedObjects()
+    // Remove all spawned objects on scene,
+    public void RemoveSpawnedObjects()
     {
         DestroyEffect[] destroyEffects = GetComponentsInChildren<DestroyEffect>();
 
         destroyEffects.ForEach(t => t.Effect());
     }
-
 }

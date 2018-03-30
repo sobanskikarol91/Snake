@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-
+// Contains positions all spawned obstacles/figures.
 public class ObstaclePositions 
 {
-    private List<List<Vector2Int>> tilesPositions = new List<List<Vector2Int>>();
+    private List<List<Vector2Int>> figuresPositions = new List<List<Vector2Int>>();
 
     public ObstaclePositions()
     {
@@ -21,12 +21,12 @@ public class ObstaclePositions
 
     public List<Vector2Int> GetPositionsList()
     {
-        return tilesPositions.ReturnAndRemoveRandom();
+        return figuresPositions.ReturnAndRemoveRandom();
     }
 
     public void Restart()
     {
-        tilesPositions = new List<List<Vector2Int>>();
+        figuresPositions = new List<List<Vector2Int>>();
         CreatePosistionList();
     }
 
@@ -51,7 +51,7 @@ public class ObstaclePositions
         AddPositionToList(4, 4, list);
         AddPositionToList(4, 5, list);
 
-        tilesPositions.Add(list);
+        figuresPositions.Add(list);
     }
 
     void Bow()
@@ -68,7 +68,7 @@ public class ObstaclePositions
         AddPositionToList(2, 0, list);
         AddPositionToList(2, 4, list);
 
-        tilesPositions.Add(list);
+        figuresPositions.Add(list);
     }
 
     void Square()
@@ -80,7 +80,7 @@ public class ObstaclePositions
         AddPositionToList(1, 0, list);
         AddPositionToList(1, 1, list);
 
-        tilesPositions.Add(list);
+        figuresPositions.Add(list);
     }
 
     void Cross()
@@ -98,7 +98,7 @@ public class ObstaclePositions
         AddPositionToList(2, 3, list);
         AddPositionToList(2, 4, list);
 
-        tilesPositions.Add(list);
+        figuresPositions.Add(list);
     }
 
     void AddPositionToList(int x, int y, List<Vector2Int> list)

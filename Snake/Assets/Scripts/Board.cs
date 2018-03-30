@@ -6,27 +6,27 @@ using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
+    public static Board instance;
     public GameObject tilePrefab;
-    public static int columns = 21;
-    public static int Columns { get { return columns; } }
-    public static int Rows { get; private set; }
+    public int Columns { get { return columns; } }
+    public int Rows { get; private set; }
+    public List<BoardTile[]> BoardTiles { get; private set; }
+    public List<BoardTile[]> UnusedTiles { get; private set; }
 
-    private GridLayoutGroup gridLayout;
-    public static List<BoardTile[]> BoardTiles { get; private set; }
-    public static List<BoardTile[]> unusedTiles { get; private set; }
+    [SerializeField] private int columns = 21;
     private BoardTileAnimator[] tilesAnimators;
     private Animator anim;
+    private GridLayoutGroup gridLayout;
 
     void Awake()
     {
+        instance = this;
         anim = GetComponent<Animator>();
         gridLayout = GetComponent<GridLayoutGroup>();
         SetRowsAndScaleFactorDependsToColumns();
 
         tilesAnimators = new BoardTileAnimator[Rows * Columns];
         BoardTiles = new List<BoardTile[]>();
-
-
     }
 
     private void Start()
@@ -87,27 +87,27 @@ public class Board : MonoBehaviour
             }
         }
 
-        unusedTiles = BoardTiles;
+        UnusedTiles = BoardTiles;
         LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
         gridLayout.enabled = false;
     }
 
-    public static BoardTile GetFirstTilePosition()
+    public BoardTile GetFirstTilePosition()
     {
         return BoardTiles[0][0];
     }
 
-    public static BoardTile GetBoardTile(Vector2Int index)
+    public BoardTile GetBoardTile(Vector2Int index)
     {
         return BoardTiles[index.x][index.y];
     }
 
-    public static Vector3 GetBoardTilePosition(Vector2Int index)
+    public Vector3 GetBoardTilePosition(Vector2Int index)
     {
         return BoardTiles[index.x][index.y].GetPositionRT();
     }
 
-    public static Vector3 GetRandomFreeTilePosition()
+    public Vector3 GetRandomFreeTilePosition()
     {
         List<BoardTile> freeTiles = new List<BoardTile>();
 
@@ -116,16 +116,15 @@ public class Board : MonoBehaviour
                 if (BoardTiles[r][c].IsFree)
                     freeTiles.Add(BoardTiles[r][c]);
 
-        // TODO: if there is one left square win
         return freeTiles.Random().GetPositionRT();
     }
 
-    public static void ChooseTileToUse(Vector2Int index)
+    public void ChooseTileToUse(Vector2Int index)
     {
-        if (!unusedTiles[index.x][index.y].IsFree)
-            Debug.LogError("Tile is already used: " + index.y + " " + index.x + " " + unusedTiles[index.y][index.x].IsFree);
+        if (!UnusedTiles[index.x][index.y].IsFree)
+            Debug.LogError("Tile is already used: " + index.y + " " + index.x + " " + UnusedTiles[index.y][index.x].IsFree);
 
-        unusedTiles[index.x][index.y].IsFree = false;
+        UnusedTiles[index.x][index.y].IsFree = false;
     }
 
     public void Restart()

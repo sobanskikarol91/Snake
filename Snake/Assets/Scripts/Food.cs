@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class Food : MonoBehaviour 
+
+public class Food : MonoBehaviour
 {
-    public float delay=0.3f;
+    public float delay = 0.3f;
 
     void Start()
     {

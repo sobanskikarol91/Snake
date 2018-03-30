@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+// Contains snake animation settings and methods.
 public class SnakeAnimation : MonoBehaviour
 {
     private const string eatingAnim = "PlayEating";
@@ -17,7 +18,7 @@ public class SnakeAnimation : MonoBehaviour
 
     public void PlayDeath(List<SnakeTile> tilesList, int snakeSize)
     {
-      float time =  Mathf.Min(destroyAnimationDelay, sumDestroyAnimationDelay/snakeSize);
+        float time = Mathf.Min(destroyAnimationDelay, sumDestroyAnimationDelay / snakeSize);
         PlayDelayedAnimation(tilesList, destroyAnim, time);
     }
 

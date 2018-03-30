@@ -5,10 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Test Settings")]
     public bool startGame = true;
     public bool spawnPlayer = true;
     public bool showLabel = true;
     public bool instantStart = true;
+
+    [Header("Game Settings")]
     public Board board;
     public Snake snake;
     public SpawnManager spawnManager;
@@ -16,12 +19,11 @@ public class GameManager : MonoBehaviour
     public SnakeLabel snakeLabel;
     public RectTransform spawnHolder;
     public float delayAfterRestart = 1f;
-    
-    private ColorManager colorManager;
-    private MenuManager menu;
-
     public int Score { get; set; }
     public int scoreFactor = 100;
+
+    private ColorManager colorManager;
+    private MenuManager menu;
 
     void Awake()
     {

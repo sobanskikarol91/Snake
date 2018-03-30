@@ -3,7 +3,10 @@
 
 public class SpawnManager : MonoBehaviour
 {
+    [Header("Test Settings")]
     public bool spawnObstacles = true;
+
+    [Header("Game Settings")]
     [SerializeField] private GameObject foodPrefab;
     public static RectTransform spawnHolder;
 
@@ -24,7 +27,7 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnFood()
     {
-        Vector3 pos = Board.GetRandomFreeTilePosition();
+        Vector3 pos = Board.instance.GetRandomFreeTilePosition();
         CreateObject(foodPrefab, pos);
     }
 

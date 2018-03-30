@@ -1,6 +1,5 @@
 ﻿using UnityEngine.UI;
 
-
 public class GameOverMenu : Menu
 {
     public Text scoreTxt;

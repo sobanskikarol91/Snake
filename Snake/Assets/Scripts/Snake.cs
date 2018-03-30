@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+// PlayerController
 public class Snake : MonoBehaviour
 {
     public GameObject snakePrefab;
@@ -28,7 +29,6 @@ public class Snake : MonoBehaviour
     {
         if (!isAlive) Restart();
         direction = DIRECTION.East;
-        isAlive = true;
         currentSnakeLength = 0;
         maxSnakeLength = startSnakeLength;
         currentMoveTime = startMoveTime;
@@ -51,7 +51,6 @@ public class Snake : MonoBehaviour
         }
     }
 
-
     public void CreateNextTile()
     {
         // Create new snake Tile
@@ -64,12 +63,12 @@ public class Snake : MonoBehaviour
         if (head != null)
         {
             Vector2Int index = GetPositionToCreateTile();
-            BoardTile bt = Board.GetBoardTile(index);
+            BoardTile bt = Board.instance.GetBoardTile(index);
             newSnakeTile.SetPositionToBoard(bt);
             head.DisableRigidbody();
         }
         else
-            newSnakeTile.SetPositionToBoard(Board.GetFirstTilePosition());
+            newSnakeTile.SetPositionToBoard(Board.instance.GetFirstTilePosition());
 
         SnakeTile snakeTile = newSnakeTile.GetComponent<SnakeTile>();
         head = snakeTile;
@@ -155,10 +154,11 @@ public class Snake : MonoBehaviour
     Vector2Int GetPositionToCreateTile()
     {
         Vector2Int direction = head.GetIndexInBoard() + GetDirectionToCreateTile();
-        if (direction.x >= Board.Rows) direction.x = 0;
-        else if (direction.x < 0) direction.x = Board.Rows - 1;
-        else if (direction.y >= Board.Columns) direction.y = 0;
-        else if (direction.y < 0) direction.y = Board.Columns - 1;
+
+        if (direction.x >= Board.instance.Rows) direction.x = 0;
+        else if (direction.x < 0) direction.x = Board.instance.Rows - 1;
+        else if (direction.y >= Board.instance.Columns) direction.y = 0;
+        else if (direction.y < 0) direction.y = Board.instance.Columns - 1;
 
         return direction;
     }
@@ -188,6 +188,7 @@ public class Snake : MonoBehaviour
 
     public void Restart()
     {
+        isAlive = true;
         head = null;
         tilesList.Clear();
     }

@@ -16,8 +16,8 @@ public class Obstacle : MonoBehaviour
         for (int i = 0; i < tilesPositions.Count; i++)
         {
             Vector2Int position = GetIndex(i) + offset;
-            Board.ChooseTileToUse(position);
-            Vector2 positionRT = Board.GetBoardTilePosition(position);
+            Board.instance.ChooseTileToUse(position);
+            Vector2 positionRT = Board.instance.GetBoardTilePosition(position);
             SpawnManager.CreateObject(tilePrefab, positionRT);
         }
     }
@@ -25,8 +25,8 @@ public class Obstacle : MonoBehaviour
     Vector2Int ChooseSpawnPosition(int spawnBoundry)
     {
         Vector2Int size = GetSize();
-        int widthMax = Board.Columns - 1 - (size.x + spawnBoundry);
-        int heightMax = Board.Rows - 1 - (size.y + spawnBoundry);
+        int widthMax = Board.instance.Columns - 1 - (size.x + spawnBoundry);
+        int heightMax = Board.instance.Rows - 1 - (size.y + spawnBoundry);
 
         int columnNr = Random.Range(spawnBoundry, widthMax);
         int rowNr = Random.Range(spawnBoundry, heightMax);
@@ -37,9 +37,9 @@ public class Obstacle : MonoBehaviour
     Vector2Int ChooseMultiSpawnPosition(int spawnBoundry, int obstacleNr, int obstacleAmount)
     {
         Vector2Int size = GetSize();
-        int widthMin = obstacleNr * Board.Columns / obstacleAmount + spawnBoundry;
-        int widthMax = (obstacleNr + 1) * (Board.Columns / obstacleAmount) - (spawnBoundry + size.x);
-        int heightMax = Board.Rows - 1 - (size.y + spawnBoundry);
+        int widthMin = obstacleNr * Board.instance.Columns / obstacleAmount + spawnBoundry;
+        int widthMax = (obstacleNr + 1) * (Board.instance.Columns / obstacleAmount) - (spawnBoundry + size.x);
+        int heightMax = Board.instance.Rows - 1 - (size.y + spawnBoundry);
 
         int columnNr = Random.Range(widthMin, widthMax);
         int rowNr = Random.Range(spawnBoundry, heightMax);

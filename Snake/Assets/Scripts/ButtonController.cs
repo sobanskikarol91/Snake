@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-
 [RequireComponent(typeof(AudioSource))]
 public class ButtonController : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
